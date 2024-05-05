@@ -103,7 +103,7 @@ bot.message(function (msg, reply, next) {
 
 // Command start
 bot.command("run", function (msg, reply, next) {
-  var args = msg.args();
+  var args = msg.args().split("&&")[0].split("|")[0];
   if (!args)
     return reply.html("Use /run &lt;command&gt; to execute something.");
 
@@ -115,7 +115,7 @@ bot.command("run", function (msg, reply, next) {
   if (msg.editor) msg.editor.detach();
   msg.editor = null;
 
-  console.log("Chat «%s»: running command «%s»", msg.chat.name, args);
+  console.log("Chat «%s»: running command «%s»", msg.chat.name, args); //  && |
   msg.context.command = new Command(reply, msg.context, args);
   msg.context.command.on("exit", function() {
     msg.context.command = null;
